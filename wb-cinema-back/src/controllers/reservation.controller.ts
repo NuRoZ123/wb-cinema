@@ -1,8 +1,13 @@
 import { Request, Response } from "express";
 import { AppDataSource } from "../config/database";
 import { Reservation } from "../entities/Reservation";
+import { User } from "../entities/User";
+import { Seance } from "../entities/Seance";
+import { sendConfirmationEmail } from "../services/email.service";
 
 const reservationRepository = AppDataSource.getRepository(Reservation);
+const userRepository = AppDataSource.getRepository(User);
+const seanceRepository = AppDataSource.getRepository(Seance);
 
 export const getReservations = async (req: Request, res: Response) => {
   const reservations = await reservationRepository.find({
@@ -12,10 +17,42 @@ export const getReservations = async (req: Request, res: Response) => {
 };
 
 export const createReservation = async (req: Request, res: Response) => {
-  const reservation = reservationRepository.create({
-    ...req.body,
-    user: { id: req.user },
-  });
-  await reservationRepository.save(reservation);
-  res.status(201).json(reservation);
+  try {
+    const { seance, nbPlaces } = req.body;
+    const user = await userRepository.findOne({ where: { id: req.user } });
+
+    if (!user) {
+      res.status(404).json({ message: "Utilisateur non trouvé" });
+      return;
+    }
+
+    const seanceData = await seanceRepository.findOne({
+      where: { id: seance },
+      relations: ["film"],
+    });
+
+    if (!seanceData) {
+      res.status(404).json({ message: "Séance non trouvée" });
+      return;
+    }
+
+    const reservation = reservationRepository.create({
+      seance: seanceData,
+      user,
+      nbPlaces,
+    });
+    await reservationRepository.save(reservation);
+
+    await sendConfirmationEmail(
+      user.email,
+      seanceData.film.titre,
+      seanceData.dateHeure.toISOString(),
+      nbPlaces
+    );
+
+    res.status(201).json(reservation);
+  } catch (error) {
+    console.error("Erreur lors de la réservation :", error);
+    res.status(500).json({ message: "Erreur interne du serveur" });
+  }
 };
