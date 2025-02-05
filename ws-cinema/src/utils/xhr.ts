@@ -4,6 +4,7 @@ const xhr = {
             const xhRequest = new XMLHttpRequest();
             xhRequest.open('POST', import.meta.env.VITE_API_URL + url);
             xhRequest.setRequestHeader('Content-Type', 'application/json');
+            xhRequest.setRequestHeader("Access-Control-Allow-Origin", "*");
 
             if (token) {
                 xhRequest.setRequestHeader('Authorization', `Bearer ${token}`);
