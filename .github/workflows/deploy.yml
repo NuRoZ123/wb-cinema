@@ -51,7 +51,7 @@ jobs:
           host: ${{ secrets.HOSTNAME }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: ./backend/*
+          source: ./wb-cinema-back/*
           target: /tmp/backend_temp
 
       ### --- EXECUTE DOCKER COMPOSE COMMANDS ---
@@ -63,8 +63,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             sudo mv /tmp/backend_temp/* /home/pi/ws-cinema
-
             cd /home/pi/ws-cinema
-
             sudo docker compose down
             sudo docker compose up -d
