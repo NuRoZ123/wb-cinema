@@ -32,4 +32,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: ./ws-cinema/dist/*
-          target: ${{ secrets.FRONT_PATH }}
+          target: ${{ vars.FRONT_PATH }}
