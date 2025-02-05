@@ -14,5 +14,8 @@ const utililisateurStore = UtilisateurStore();
 if(!utililisateurStore.isConnected) {
   router.push({name: 'login'});
 }
+else {
+  router.push({name: 'home'});
+}
 </script>
 
