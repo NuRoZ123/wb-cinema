@@ -29,7 +29,7 @@ jobs:
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.HOSTNAME }}
-          username: your-username
+          username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: ./ws-cinema/dist/*
           target: ${{ secrets.FRONT_PATH }}
