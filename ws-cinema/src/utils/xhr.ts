@@ -1,9 +1,14 @@
 const xhr = {
-    post: (url, data) => {
+    post: (url: String, data: Object, token?: String) => {
         return new Promise((resolve, reject) => {
             const xhRequest = new XMLHttpRequest();
             xhRequest.open('POST', "http://localhost:3000" + url);
             xhRequest.setRequestHeader('Content-Type', 'application/json');
+
+            if (token) {
+                xhRequest.setRequestHeader('Authorization', `Bearer ${token}`);
+            }
+
             xhRequest.onload = () => {
                 if (xhRequest.responseText === "Created" || JSON.parse(xhRequest.responseText).error) {
                     return reject({response: xhRequest.responseText, code: xhRequest.status});

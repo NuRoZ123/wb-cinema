@@ -6,7 +6,7 @@ export const UtilisateurStore = defineStore("UtilisateurStore", {
         isConnected: localStorage.getItem("token") !== null,
     }),
     actions: {
-        login(email, password, onSuccess, onFailed) {
+        login(email: String, password: String, onSuccess: Function, onFailed: Function) {
             xhr.post("/auth/login", {email, password}).then(response => {
                 if(response.code === 200) {
                     localStorage.setItem("token", JSON.parse(response.response).token);
@@ -18,7 +18,7 @@ export const UtilisateurStore = defineStore("UtilisateurStore", {
             });
         },
 
-        register(email, password, onSuccess, onFailed) {
+        register(email: String, password: String, onSuccess: Function, onFailed: Function) {
             xhr.post("/auth/register", {email, password}).then(response => {
                 if(response.code === 201) {
                     onSuccess();
