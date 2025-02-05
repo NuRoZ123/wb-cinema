@@ -63,9 +63,10 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            sudo mv /home/pi/ws-cinema/.env /tmp/backend_temp/wb-cinema-back/.env
+            sudo mv /home/pi/ws-cinema/.env /tmp/backend_temp/.env
             sudo rm -rf /home/pi/ws-cinema/*
             sudo mv /tmp/backend_temp/wb-cinema-back/* /home/pi/ws-cinema
+            sudo mv /tmp/backend_temp/.env /home/pi/ws-cinema/.env
             cd /home/pi/ws-cinema
             sudo docker compose down
             sudo docker compose up -d
