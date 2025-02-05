@@ -1,5 +1,5 @@
 import express from "express";
-import { getSalles, createSalle } from "../controllers/Salle.controller";
+import { getSalles, createSalle } from "../controllers/salle.controller";
 
 const router = express.Router();
 router.get("/", getSalles);
