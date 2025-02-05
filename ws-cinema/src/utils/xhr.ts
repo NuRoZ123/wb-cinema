@@ -2,8 +2,9 @@ const xhr = {
     post: (url: String, data: Object, token?: String) => {
         return new Promise((resolve, reject) => {
             const xhRequest = new XMLHttpRequest();
-            xhRequest.open('POST', "http://localhost:3000" + url);
+            xhRequest.open('POST', import.meta.env.VITE_API_URL + url);
             xhRequest.setRequestHeader('Content-Type', 'application/json');
+            xhRequest.setRequestHeader("Access-Control-Allow-Origin", "*");
 
             if (token) {
                 xhRequest.setRequestHeader('Authorization', `Bearer ${token}`);
