@@ -3,6 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { AppDataSource } from "./config/database";
 import authRoutes from "./routes/auth.routes";
+import salleRoutes from "./routes/Salle.routes";
 import filmRoutes from "./routes/film.routes";
 import genreRoutes from "./routes/genre.routes";
 import cors from "cors";
@@ -16,6 +17,8 @@ app.use(cors());
 app.use("/auth", authRoutes);
 app.use("/film", filmRoutes);
 app.use("/genre", genreRoutes);
+
+app.use("/salles", salleRoutes);
 
 AppDataSource.initialize()
   .then(() => {
