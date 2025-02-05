@@ -2,7 +2,7 @@ const xhr = {
     post: (url: String, data: Object, token?: String) => {
         return new Promise((resolve, reject) => {
             const xhRequest = new XMLHttpRequest();
-            xhRequest.open('POST', "http://localhost:3000" + url);
+            xhRequest.open('POST', "http://localhost:95" + url);
             xhRequest.setRequestHeader('Content-Type', 'application/json');
 
             if (token) {

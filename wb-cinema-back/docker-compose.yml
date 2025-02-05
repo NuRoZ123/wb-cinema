@@ -19,5 +19,15 @@ services:
     depends_on:
       - db
 
+  backend:
+    image: node:slim
+    command: sh -c 'npm install && npp run start'
+    volumes:
+      - .:/api
+    working_dir: /api
+    ports:
+      - "127.0.0.1:95:95"
+    restart: always
+
 volumes:
   db_data:

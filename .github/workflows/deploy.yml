@@ -43,3 +43,28 @@ jobs:
           script: |
             sudo mv /tmp/deployment_temp/ws-cinema/dist/* /var/www/ws-cinema
             sudo rm -rf /tmp/deployment_temp
+
+      ### --- BUILD DU BACKEND ---
+      - name: Deploy backend to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOSTNAME }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: ./backend/*
+          target: /tmp/backend_temp
+
+      ### --- EXECUTE DOCKER COMPOSE COMMANDS ---
+      - name: Restart backend services
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.HOSTNAME }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            sudo mv /tmp/backend_temp/* /home/pi/ws-cinema
+
+            cd /home/pi/ws-cinema
+
+            sudo docker compose down
+            sudo docker compose up -d
