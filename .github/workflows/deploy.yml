@@ -30,6 +30,6 @@ jobs:
         with:
           host: ${{ secrets.HOSTNAME }}
           username: your-username
-          password: ${{ secrets.PASSWORD }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: ./ws-cinema/dist/*
           target: ${{ secrets.FRONT_PATH }}
