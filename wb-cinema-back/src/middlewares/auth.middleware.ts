@@ -19,7 +19,8 @@ export const authMiddleware = (
 ) => {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).json({ message: "Accès refusé" });
+    res.status(401).json({ message: "Accès refusé" });
+    return;
   }
 
   const token = authHeader.split(" ")[1];
@@ -31,6 +32,6 @@ export const authMiddleware = (
     req.user = decoded.userId;
     next();
   } catch (error) {
-    return res.status(401).json({ message: "Token invalide" });
+    res.status(401).json({ message: "Token invalide" });
   }
 };

@@ -7,6 +7,7 @@ import salleRoutes from "./routes/salle.routes";
 import filmRoutes from "./routes/film.routes";
 import genreRoutes from "./routes/genre.routes";
 import seanceRoutes from "./routes/seance.routes";
+import reservationRoutes from "./routes/reservation.routes";
 import cors from "cors";
 
 dotenv.config();
@@ -20,6 +21,7 @@ app.use("/film", filmRoutes);
 app.use("/genre", genreRoutes);
 app.use("/seance", seanceRoutes);
 app.use("/salles", salleRoutes);
+app.use("/reservation", reservationRoutes);
 
 AppDataSource.initialize()
   .then(() => {
