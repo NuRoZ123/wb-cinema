@@ -41,6 +41,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            sudo rm -rf /var/www/ws-cinema/*
             sudo mv /tmp/deployment_temp/ws-cinema/dist/* /var/www/ws-cinema
             sudo rm -rf /tmp/deployment_temp
 
