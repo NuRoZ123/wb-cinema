@@ -4,6 +4,7 @@
     import router from "@/router";
     import { GenreStore } from '@/stores/GenreStore';
     import {UtilisateurStore} from "@/stores/UtilisateurStore.ts";
+    import type { Genre } from '@/model/genre';
 
     const utililisateurStore = UtilisateurStore();
 
@@ -19,7 +20,7 @@
     let newMovieDescription = ref('');
     let newMovieImage = ref('');
     let newMovieDuration = ref(0);
-    let newMovieGenre = ref<{ id: number; nom: string } | undefined>(undefined);
+    let newMovieGenre = ref<Genre>();
 
     const moviesStore = MoviesStore();
     moviesStore.fetchMovies();
@@ -35,11 +36,12 @@
 
     const addFilm = () => {
         console.log('Ajout');
+        console.log(newMovieGenre.value);
         moviesStore.addMovie(
             newMovieTitle.value,
             newMovieDescription.value,
             newMovieDuration.value,
-            newMovieGenre.value.id,
+            newMovieGenre.value,
             newMovieImage.value
         );
         showModalAdd.value = false;
@@ -52,7 +54,7 @@
             newMovieTitle.value,
             newMovieDescription.value,
             newMovieDuration.value,
-            newMovieGenre.value.id,
+            newMovieGenre.value,
             newMovieImage.value
         );
         showModalEdit.value = false;
@@ -79,7 +81,7 @@
             newMovieDescription.value = film.description;
             newMovieImage.value = film.image;
             newMovieDuration.value = film.duree;
-            newMovieGenre.value = film.genres[0].id;
+            newMovieGenre.value!.id = film.genres.id;
         }
         console.log(newMovieGenre.value);
     }

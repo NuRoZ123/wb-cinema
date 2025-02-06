@@ -15,7 +15,7 @@
             <tbody>
                 <tr v-for="reservation in reservationStore.reservations" :key="reservation.id">
                     <td>{{ reservation.seance.film.titre }}</td>
-                    <td>{{ reservation.seance.dateHeure }}</td>
+                    <td>{{ formater.formatDateTime(reservation.seance.dateHeure) }}</td>
                     <td>{{ reservation.nbPlaces }}</td>
                     <td>{{ reservation.seance.salle.nom }}</td>
                 </tr>
@@ -26,6 +26,7 @@
 
 <script setup lang="ts">
 import { ReservationStore } from '@/stores/ReservationStore';
+import { formater } from '@/utils/formater';
 import { ref } from 'vue';
 
 const showModalAdd = ref(false);

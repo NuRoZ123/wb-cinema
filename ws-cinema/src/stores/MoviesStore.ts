@@ -19,7 +19,7 @@ export const MoviesStore = defineStore('MoviesStore', {
             });
         },
         async deleteMovie(id: number) {
-            xhr.delete('/film/' + id).then(response => {
+            xhr.delete('/film/' + id, localStorage.getItem("token") as string).then(response => {
                 if(response.code === 200) {
                     this.fetchMovies();
                 }
@@ -29,6 +29,7 @@ export const MoviesStore = defineStore('MoviesStore', {
             });
         },
         async addMovie(titre: string, description: string, duree: number, genres: number, image: string) {
+            console.log(genres);
             const movie = {
                 titre: titre,
                 description: description,
@@ -36,7 +37,7 @@ export const MoviesStore = defineStore('MoviesStore', {
                 genres: genres,
                 image: image
             };
-            xhr.post('/film', movie).then(response => {
+            xhr.post('/film', movie, localStorage.getItem("token") as string).then(response => {
                 if(response.code === 201) {
                     this.fetchMovies();
                 }
@@ -53,7 +54,7 @@ export const MoviesStore = defineStore('MoviesStore', {
                 genres: genres,
                 image: image
             };
-            xhr.put('/film/' + id, movie).then(response => {
+            xhr.put('/film/' + id, movie, localStorage.getItem("token") as string).then(response => {
                 if(response.code === 200) {
                     this.fetchMovies();
                 }
