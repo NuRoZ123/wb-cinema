@@ -3,6 +3,9 @@
 ## 📝 **Description**
 **wb-cinema** est une application web destinée à gérer les sessions de cinéma. Elle permet aux administrateurs de créer, modifier et gérer des sessions, tandis que les utilisateurs peuvent consulter les films disponibles et les horaires des sessions.
 
+## Vidéo de demonstration
+[Video](./Video-demonstration-cinema.mov)
+
 ## 🛠 **Technologies Utilisées**
 Cette application utilise les technologies et frameworks suivants :
 - **backend** :
