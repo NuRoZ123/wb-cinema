@@ -1,22 +1,14 @@
 import request from "supertest";
-import { AppDataSource } from "../src/config/database";
-import app from "../src/index";
+import app from "../src/index"; // ✅ Utilisation directe de `app`
 import { User } from "../src/entities/User";
+import { AppDataSource } from "../src/config/database";
 import jwt from "jsonwebtoken";
 
 jest.mock("jsonwebtoken", () => ({
-  sign: jest.fn(() => "fake-jwt-token"), // Mock JWT
+  sign: jest.fn(() => "fake-jwt-token"),
 }));
 
-describe("🛠️ Tests unitaires - Authentification (Mocking)", () => {
-  beforeAll(async () => {
-    await AppDataSource.initialize();
-  });
-
-  afterAll(async () => {
-    await AppDataSource.destroy();
-  });
-
+describe("🛠️ Tests unitaires - Authentification (Mocking, sans base de données)", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
