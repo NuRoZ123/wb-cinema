@@ -3,7 +3,7 @@ version: '3.8'
 services:
   backend:
     image: node:slim
-    command: sh -c 'npm install && npm run dev'
+    command: sh -c 'npm install && npm run generate-docs && npm run dev'
     volumes:
       - .:/api
     working_dir: /api
