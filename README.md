@@ -26,6 +26,7 @@ Cette application utilise les technologies et frameworks suivants :
   - **TypeScript**
   - **JavaScript**
   - **Node.js**
+  - **Pinia**
 
 
 

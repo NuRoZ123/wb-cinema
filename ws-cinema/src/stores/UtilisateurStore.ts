@@ -7,7 +7,9 @@ export const UtilisateurStore = defineStore("UtilisateurStore", {
     }),
     actions: {
         login(email: String, password: String, onSuccess: Function, onFailed: Function) {
+            console.log('login')
             xhr.post("/auth/login", {email, password}).then((response: any) => {
+                console.log(response)
                 if(response.code === 200) {
                     localStorage.setItem("token", JSON.parse(response.response).token);
                     this.isConnected = true;

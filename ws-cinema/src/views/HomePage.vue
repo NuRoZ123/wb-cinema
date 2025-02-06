@@ -2,7 +2,15 @@
     import { MoviesStore } from '@/stores/MoviesStore.ts';
     import {ref} from "vue";
     import router from "@/router";
-   
+    import { GenreStore } from '@/stores/GenreStore';
+    import {UtilisateurStore} from "@/stores/UtilisateurStore.ts";
+
+    const utililisateurStore = UtilisateurStore();
+
+    if(!utililisateurStore.isConnected) {
+    router.push({name: 'login'});
+    }
+
     let showModalSuppression = ref(false);
     let showModalAdd = ref(false);
     let showModalEdit = ref(false);
@@ -14,8 +22,9 @@
     let newMovieGenre = ref<{ id: number; nom: string } | undefined>(undefined);
 
     const moviesStore = MoviesStore();
-
     moviesStore.fetchMovies();
+
+    const genreStore = GenreStore();
 
     const deleteFilm = (id: number) => {
         console.log(id);
@@ -50,7 +59,7 @@
     }
 
     const clickAdd = () => {
-        moviesStore.fetchGenres();
+        genreStore.fetchGenres();
         showModalAdd.value = true;
         newMovieTitle.value = '';
         newMovieDescription.value = '';
@@ -62,7 +71,7 @@
     const clickEdit = (id: number) => {
         const film = moviesStore.movies.find(movie => movie.id === id);
         console.log('Modification');
-        moviesStore.fetchGenres();
+        genreStore.fetchGenres();
         showModalEdit.value = true;
         console.log(film?.genres)
         if (film) {
@@ -78,13 +87,28 @@
     const onSelectFilm = (id: number) => {
         router.push({ path: `/seances/film/${id}` });
     }
+
+    const voirSalles = () => {
+        router.push({ path: '/salles' });
+    }
+
+    const voirGenres = () => {
+        router.push({ path: '/genres' });
+    }
+
+    const voirReservations = () => {
+        router.push({ path: '/reservations' });
+    }
 </script>
 
 
 
 <template>
     <h1>WS - Cinéma</h1>
-    <button class="absolute top-2 right-2 bg-blue-500 text-white py-2 px-4 rounded" @click="clickAdd()">Ajout</button>
+    <button class="absolute top-2 right-2 bg-blue-500 text-white py-2 px-4 rounded" @click="clickAdd()">Ajout d'un film</button>
+    <button class="absolute top-2 left-2 bg-blue-500 text-white py-2 px-4 rounded" @click="voirSalles()">Voir les salles</button>
+    <button class="absolute top-15 left-2 bg-blue-500 text-white py-2 px-4 rounded" @click="voirGenres()">Voir les genres</button>
+    <button class="absolute top-28 left-2 bg-blue-500 text-white py-2 px-4 rounded" @click="voirReservations()">Voir mes réservations</button>
 
     <div v-if="showModalAdd" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
         <div class="modal-content bg-white p-4 rounded w-1/3">
@@ -99,7 +123,7 @@
             <input type="number" v-model="newMovieDuration" class="border p-2 w-full mb-2" placeholder="Durée du film en minutes" />
             <p>Genre du film</p>
             <select v-model="newMovieGenre" class="border p-2 w-full mb-2">
-                <option v-for="genre in moviesStore.genres" :key="genre.id" :value="genre.id">{{ genre.nom }}</option>
+                <option v-for="genre in genreStore.genres" :key="genre.id" :value="genre.id">{{ genre.nom }}</option>
             </select>
             <div class="flex justify-end mt-4">
                 <button @click="showModalAdd = false" class="bg-gray-500 text-white py-2 px-4 rounded mr-2">Annuler</button>
@@ -139,7 +163,7 @@
                 <input type="number" v-model="newMovieDuration" class="border p-2 w-full mb-2" placeholder="Durée du film en minutes" />
                 <p>Genre du film</p>
                 <select v-model="newMovieGenre" class="border p-2 w-full mb-2">
-                    <option v-for="genre in moviesStore.genres" :key="genre.id" :value="genre.id">{{ genre.nom }}</option>
+                    <option v-for="genre in genreStore.genres" :key="genre.id" :value="genre.id">{{ genre.nom }}</option>
                 </select>
                 <div class="flex justify-end mt-4">
                     <button @click="showModalEdit = false" class="bg-gray-500 text-white py-2 px-4 rounded mr-2">Annuler</button>
