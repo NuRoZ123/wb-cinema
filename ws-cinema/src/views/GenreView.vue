@@ -8,7 +8,7 @@
             <div class="modal-content bg-white p-4 rounded w-1/3">
                 <h2 class="text-xl mb-4">Ajouter un genre</h2>
                 <p>Nom</p>
-                <input type="text" v-model="newNom" class="border p-2 w-full mb-2" placeholder="Nom de la salle" />
+                <input type="text" v-model="newNom" class="border p-2 w-full mb-2" placeholder="Nom du genre" />
                 <div class="flex justify-end mt-4">
                     <button @click="showModalAdd = false" class="bg-gray-500 text-white py-2 px-4 rounded mr-2">Annuler</button>
                     <button @click="createGenre()" class="bg-blue-500 text-white py-2 px-4 rounded">Ajouter</button>

@@ -22,7 +22,7 @@ export const SallesStore = defineStore('SallesStore', {
                 nom: nom,
                 capacite: capacite
             };
-            xhr.post('/salles', salle).then(response => {
+            xhr.post('/salles', salle, localStorage.getItem("token") as string).then(response => {
                 if(response.code === 201) {
                     this.loadSalle();
                 }

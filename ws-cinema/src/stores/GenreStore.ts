@@ -21,7 +21,7 @@ export const GenreStore = defineStore('GenreStore', {
             const genre = {
                 nom: nom
             };
-            xhr.post('/genre', genre).then(response => {
+            xhr.post('/genre', genre, localStorage.getItem("token") as string).then(response => {
                 if(response.code === 201) {
                     this.fetchGenres();
                 }
