@@ -6,6 +6,6 @@ export const filmSchema = z.object({
     .string()
     .min(10, "La description doit contenir au moins 10 caractères"),
   duree: z.number().positive("La durée doit être un nombre positif"),
-  affiche: z.string().url("L'affiche doit être une URL valide"),
+  image: z.string().url("L'affiche doit être une URL valide"),
   genres: z.number().positive("Au moins un genre est requis"),
 });
