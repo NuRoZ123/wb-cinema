@@ -1,9 +1,14 @@
 <script setup lang="ts">
-    import { MoviesStore } from '@/stores/MoviesStore.ts';
+import {MoviesStore} from '@/stores/MoviesStore.ts';
+import router from "@/router";
 
-    const moviesStore = MoviesStore();
+const moviesStore = MoviesStore();
 
     moviesStore.fetchMovies();
+
+    const onSelectFilm = (id: number) => {
+        router.push({ path: `/seances/film/${id}` });
+    }
 </script>
 
 
@@ -11,7 +16,7 @@
 <template>
     <h1>WS - Cinéma</h1>
     <div class="home-page">
-        <div v-for="movie in moviesStore.movies" :key="movie.id" class="movie">
+        <div v-for="movie in moviesStore.movies" :key="movie.id" class="movie" @click="onSelectFilm(movie.id)">
             <img :src="movie.image" :alt="movie.titre" class="movie-poster" />
             <h2 class="movie-title">{{ movie.titre }}</h2>
         </div>
