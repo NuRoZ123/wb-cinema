@@ -6,4 +6,5 @@ export interface Movie {
     titre: string;
     image: string;
     genres: Genre;
+    duree: number;
     }
