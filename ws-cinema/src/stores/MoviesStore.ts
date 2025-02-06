@@ -10,7 +10,7 @@ export const MoviesStore = defineStore('MoviesStore', {
     }),
     actions: {
         async fetchMovies() {
-            xhr.get('/film').then(response => {
+            xhr.get('/film').then((response: any) => {
                 if(response.code === 200) {
                     this.movies = JSON.parse(response.response);
                 }

@@ -1,6 +1,8 @@
 <script setup lang="ts">
     import { MoviesStore } from '@/stores/MoviesStore.ts';
     import {ref} from "vue";
+    import router from "@/router";
+   
     let showModalSuppression = ref(false);
     let showModalAdd = ref(false);
     let showModalEdit = ref(false);
@@ -71,6 +73,9 @@
             newMovieGenre.value = film.genres[0].id;
         }
         console.log(newMovieGenre.value);
+        
+    const onSelectFilm = (id: number) => {
+        router.push({ path: `/seances/film/${id}` });
     }
 </script>
 
@@ -103,7 +108,7 @@
     </div>
     
     <div class="home-page">
-        <div v-for="movie in moviesStore.movies" :key="movie.id" class="movie relative" style="border: 1px solid #ccc; padding: 10px; position: relative;">
+        <div v-for="movie in moviesStore.movies" :key="movie.id" class="movie relative" style="border: 1px solid #ccc; padding: 10px; position: relative;" @click="onSelectFilm(movie.id)">
             <img :src="movie.image" :alt="movie.titre" class="movie-poster" />
             <h2 class="movie-title">{{ movie.titre }}</h2>
             <button class="absolute top-2 right-2 bg-red-500 text-white py-2 px-4 rounded opacity-0 hover:opacity-100 transition-opacity duration-300" @click="clickEdit(movie.id)">Modifier</button>

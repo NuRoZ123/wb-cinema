@@ -1,21 +1,26 @@
 import "reflect-metadata";
 import express from "express";
 import dotenv from "dotenv";
-import { AppDataSource } from "./config/database";
+import {AppDataSource} from "./config/database";
 import authRoutes from "./routes/auth.routes";
 import salleRoutes from "./routes/salle.routes";
 import filmRoutes from "./routes/film.routes";
 import genreRoutes from "./routes/genre.routes";
 import seanceRoutes from "./routes/seance.routes";
-import reservationRoutes from "./routes/reservation.routes";
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from '../swagger-output.json';
+
 import cors from "cors";
+import reservationRoutes from "./routes/reservation.routes";
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(cors({origin: process.env.corsOrigin}));
+
+app.use(cors({ origin: process.env.corsOrigin }));
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/auth", authRoutes);
 app.use("/film", filmRoutes);
 app.use("/genre", genreRoutes);
