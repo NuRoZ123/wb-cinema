@@ -1,22 +1,22 @@
 import {defineStore} from 'pinia';
 import xhr from '@/utils/xhr.ts';
-import type {Movie} from '@/model/movie';
+import type {Salle} from "@/model/salle.ts";
 
-export const MoviesStore = defineStore('MoviesStore', {
+export const SallesStore = defineStore('SallesStore', {
     state: () => ({
-        movies: [] as Movie[],
+        salles: [] as Salle[],
     }),
     actions: {
-        async fetchMovies() {
-    
-            xhr.get('/film').then((response: any) => {
+        async loadSalle() {
+            xhr.get('/salles').then((response: any) => {
                 if(response.code === 200) {
-                    this.movies = JSON.parse(response.response);
+                    this.salles = JSON.parse(response.response);
                 }
                 else {
                     console.log('Error while fetching movies');
                 }
             });
         },
+
     },
 });
