@@ -6,7 +6,6 @@ import type { Genre } from '@/model/genre';
 export const MoviesStore = defineStore('MoviesStore', {
     state: () => ({
         movies: [] as Movie[],
-        genres: [] as Genre[],
     }),
     actions: {
         async fetchMovies() {
@@ -16,16 +15,6 @@ export const MoviesStore = defineStore('MoviesStore', {
                 }
                 else {
                     console.log('Error while fetching movies');
-                }
-            });
-        },
-        async fetchGenres() {
-            xhr.get('/genre').then(response => {
-                if(response.code === 200) {
-                    this.genres = JSON.parse(response.response);
-                }
-                else {
-                    console.log('Error while fetching genres');
                 }
             });
         },

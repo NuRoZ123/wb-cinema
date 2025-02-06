@@ -4,6 +4,7 @@ import LoginView from "@/views/LoginView.vue";
 import HomePage from '@/views/HomePage.vue';
 import SeanceView from "@/views/SeanceView.vue";
 import SallesView from "@/views/SallesView.vue";
+import GenreView from '@/views/GenreView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,6 +14,7 @@ const router = createRouter({
     {path: '/home', name: 'home', component: HomePage},
     {path: '/seances/film/:id', name: 'seances', component: SeanceView},
     {path: '/salles', name: 'salles', component: SallesView},
+    {path: '/genres', name: 'genres', component: GenreView},
   ],
 })
 
