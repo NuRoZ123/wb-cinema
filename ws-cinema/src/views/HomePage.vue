@@ -78,13 +78,18 @@
     const onSelectFilm = (id: number) => {
         router.push({ path: `/seances/film/${id}` });
     }
+
+    const voirSalles = () => {
+        router.push({ path: '/salles' });
+    }
 </script>
 
 
 
 <template>
     <h1>WS - Cinéma</h1>
-    <button class="absolute top-2 right-2 bg-blue-500 text-white py-2 px-4 rounded" @click="clickAdd()">Ajout</button>
+    <button class="absolute top-2 right-2 bg-blue-500 text-white py-2 px-4 rounded" @click="clickAdd()">Ajout d'un film</button>
+    <button class="absolute top-2 left-2 bg-blue-500 text-white py-2 px-4 rounded" @click="voirSalles()">Voir les salles</button>
 
     <div v-if="showModalAdd" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
         <div class="modal-content bg-white p-4 rounded w-1/3">
