@@ -8,13 +8,14 @@ import {
 } from "../controllers/film.controller";
 import { validate } from "../middlewares/validate.middleware";
 import { filmSchema } from "../validation/film.validation";
+import { authMiddleware } from "../middlewares/auth.middleware";
 
 const router = express.Router();
 
 router.get("/", getFilms);
 router.get("/:id", getFilmById);
-router.post("/", validate(filmSchema), createFilm);
-router.put("/:id", validate(filmSchema), updateFilm);
-router.delete("/:id", deleteFilm);
+router.post("/", validate(filmSchema), authMiddleware, createFilm);
+router.put("/:id", validate(filmSchema), authMiddleware, updateFilm);
+router.delete("/:id", authMiddleware, deleteFilm);
 
 export default router;
