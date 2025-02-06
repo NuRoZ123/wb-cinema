@@ -3,10 +3,12 @@ import { AppDataSource } from "../config/database";
 import { Seance } from "../entities/Seance";
 import { Film } from "../entities/Film";
 import { Salle } from "../entities/Salle";
+import { Reservation } from "../entities/Reservation";
 
 const seanceRepository = AppDataSource.getRepository(Seance);
 const filmRepository = AppDataSource.getRepository(Film);
 const salleRepository = AppDataSource.getRepository(Salle);
+const reservationRepository = AppDataSource.getRepository(Reservation);
 
 export const getSeancesByFilmId = async (req: Request, res: Response) => {
   const seances = await seanceRepository.find({
@@ -39,4 +41,23 @@ export const createSeance = async (req: Request, res: Response) => {
   });
   await seanceRepository.save(seance);
   res.status(201).json(seance);
+};
+
+export const deleteSeance = async (req: Request, res: Response) => {
+  const seance = await seanceRepository.findOne({
+    where: { id: parseInt(req.params.id) },
+  });
+  if (!seance) {
+    res.status(404).json({ message: "Séance introuvable" });
+    return;
+  }
+  const reservations = await reservationRepository.find({
+    where: { seance: { id: seance.id } },
+  });
+  if (reservations.length > 0) {
+    await reservationRepository.remove(reservations);
+  }
+
+  await seanceRepository.remove(seance);
+  res.status(204);
 };
