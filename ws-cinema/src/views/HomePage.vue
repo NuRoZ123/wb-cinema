@@ -2,7 +2,14 @@
     import { MoviesStore } from '@/stores/MoviesStore.ts';
     import {ref} from "vue";
     import router from "@/router";
-import { GenreStore } from '@/stores/GenreStore';
+    import { GenreStore } from '@/stores/GenreStore';
+    import {UtilisateurStore} from "@/stores/UtilisateurStore.ts";
+
+    const utililisateurStore = UtilisateurStore();
+
+    if(!utililisateurStore.isConnected) {
+    router.push({name: 'login'});
+    }
 
     let showModalSuppression = ref(false);
     let showModalAdd = ref(false);
@@ -88,6 +95,10 @@ import { GenreStore } from '@/stores/GenreStore';
     const voirGenres = () => {
         router.push({ path: '/genres' });
     }
+
+    const voirReservations = () => {
+        router.push({ path: '/reservations' });
+    }
 </script>
 
 
@@ -97,6 +108,7 @@ import { GenreStore } from '@/stores/GenreStore';
     <button class="absolute top-2 right-2 bg-blue-500 text-white py-2 px-4 rounded" @click="clickAdd()">Ajout d'un film</button>
     <button class="absolute top-2 left-2 bg-blue-500 text-white py-2 px-4 rounded" @click="voirSalles()">Voir les salles</button>
     <button class="absolute top-15 left-2 bg-blue-500 text-white py-2 px-4 rounded" @click="voirGenres()">Voir les genres</button>
+    <button class="absolute top-28 left-2 bg-blue-500 text-white py-2 px-4 rounded" @click="voirReservations()">Voir mes réservations</button>
 
     <div v-if="showModalAdd" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
         <div class="modal-content bg-white p-4 rounded w-1/3">
