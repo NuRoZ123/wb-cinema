@@ -8,14 +8,31 @@ import filmRoutes from "./routes/film.routes";
 import genreRoutes from "./routes/genre.routes";
 import seanceRoutes from "./routes/seance.routes";
 import reservationRoutes from "./routes/reservation.routes";
+import oas from "express-oas-generator";
+
 import cors from "cors";
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+const doc = {
+  info: {
+    title: "API de Gestion de Cinéma",
+    description: "Documentation générée automatiquement avec swagger-autogen",
+    version: "1.0.0",
+  },
+  servers: [
+    {
+      url: "http://localhost:" + process.env.PORT,
+      description: "Serveur local",
+    },
+  ],
+};
 app.use(express.json());
-app.use(cors({origin: process.env.corsOrigin}));
+
+oas.init(app, doc);
+
+app.use(cors({ origin: process.env.corsOrigin }));
 app.use("/auth", authRoutes);
 app.use("/film", filmRoutes);
 app.use("/genre", genreRoutes);
