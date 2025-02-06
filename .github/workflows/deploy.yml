@@ -17,7 +17,7 @@ jobs:
       ### --- TESTS BACKEND ---
       - name: Install backend dependencies
         working-directory: ./wb-cinema-back
-        run: npm install
+        run: npm install && npm run generate-docs
 
       - name: Run backend tests
         working-directory: ./wb-cinema-back
