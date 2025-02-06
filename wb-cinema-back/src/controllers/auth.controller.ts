@@ -30,14 +30,18 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 export const login = async (req: Request, res: Response): Promise<void> => {
   try {
     const { email, password } = req.body;
+    if (!email || !password) {
+      res.status(400).json({ errors: "Email et mot de passe requis" });
+      return;
+    }
+
     const user = await userRepository.findOne({ where: { email } });
 
     if (!user || !(await user.comparePassword(password))) {
       res.status(401).json({ message: "Email ou mot de passe incorrect" });
       return;
     }
-    console.log(user);
-    console.log(process.env.JWT_SECRET);
+
     const token = jwt.sign(
       { userId: user.id },
       process.env.JWT_SECRET as string,
