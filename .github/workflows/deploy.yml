@@ -13,6 +13,42 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      ### --- TESTS BACKEND ---
+      - name: Install backend dependencies
+        working-directory: ./wb-cinema-back
+        run: npm install && npm run generate-docs && echo "RESEND_API_KEY=123456" > .env
+
+      - name: Run backend tests
+        working-directory: ./wb-cinema-back
+        run: npm run test
+
+      ### --- BUILD DU BACKEND ---
+      - name: Deploy backend to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOSTNAME }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: ./wb-cinema-back/*
+          target: /tmp/backend_temp
+
+      ### --- EXECUTE DOCKER COMPOSE COMMANDS ---
+      - name: Restart backend services
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.HOSTNAME }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            sudo mv /home/pi/ws-cinema/.env /tmp/backend_temp/.env
+            sudo rm -rf /home/pi/ws-cinema/*
+            sudo mv /tmp/backend_temp/wb-cinema-back/* /home/pi/ws-cinema
+            sudo mv /tmp/backend_temp/.env /home/pi/ws-cinema/.env
+            cd /home/pi/ws-cinema
+            sudo docker compose down
+            sudo docker compose up -d
+            sudo rm -rf /tmp/backend_temp
+
       ### --- BUILD DU FRONTEND ---
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -45,29 +81,3 @@ jobs:
             sudo mv /tmp/deployment_temp/ws-cinema/dist/* /var/www/ws-cinema
             sudo rm -rf /tmp/deployment_temp
 
-      ### --- BUILD DU BACKEND ---
-      - name: Deploy backend to server
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.HOSTNAME }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: ./wb-cinema-back/*
-          target: /tmp/backend_temp
-
-      ### --- EXECUTE DOCKER COMPOSE COMMANDS ---
-      - name: Restart backend services
-        uses: appleboy/ssh-action@v0.1.7
-        with:
-          host: ${{ secrets.HOSTNAME }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            sudo mv /home/pi/ws-cinema/.env /tmp/backend_temp/.env
-            sudo rm -rf /home/pi/ws-cinema/*
-            sudo mv /tmp/backend_temp/wb-cinema-back/* /home/pi/ws-cinema
-            sudo mv /tmp/backend_temp/.env /home/pi/ws-cinema/.env
-            cd /home/pi/ws-cinema
-            sudo docker compose down
-            sudo docker compose up -d
-            sudo rm -rf /tmp/backend_temp
