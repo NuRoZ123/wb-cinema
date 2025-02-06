@@ -17,6 +17,19 @@ export const SallesStore = defineStore('SallesStore', {
                 }
             });
         },
-
+        async createSalle(nom: string, capacite: number) {
+            const salle = {
+                nom: nom,
+                capacite: capacite
+            };
+            xhr.post('/salles', salle).then(response => {
+                if(response.code === 201) {
+                    this.loadSalle();
+                }
+                else {
+                    console.log('Error while adding movie');
+                }
+            });
+        }
     },
 });
