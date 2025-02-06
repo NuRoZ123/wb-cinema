@@ -17,7 +17,7 @@ jobs:
       ### --- TESTS BACKEND ---
       - name: Install backend dependencies
         working-directory: ./wb-cinema-back
-        run: npm install && npm run generate-docs
+        run: npm install && npm run generate-docs && echo "RESEND_API_KEY=123456" > .env
 
       - name: Run backend tests
         working-directory: ./wb-cinema-back
