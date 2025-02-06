@@ -11,6 +11,6 @@ import { seanceSchema } from "../validation/seance.validation";
 const router = express.Router();
 router.get("/:id", getSeancesByFilmId);
 router.post("/", validate(seanceSchema), authMiddleware, createSeance);
-router.delete("/:id", deleteSeance);
+router.delete("/:id", authMiddleware, deleteSeance);
 
 export default router;
