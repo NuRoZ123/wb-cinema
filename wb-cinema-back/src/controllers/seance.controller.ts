@@ -59,5 +59,5 @@ export const deleteSeance = async (req: Request, res: Response) => {
   }
 
   await seanceRepository.remove(seance);
-  res.status(204);
+  res.status(200).json({ message: "Séance supprimé" });
 };
